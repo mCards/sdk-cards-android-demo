@@ -1,12 +1,12 @@
 package com.mcards.sdk.cards.demo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -15,14 +15,16 @@ import com.mcards.sdk.auth.AuthSdkProvider
 import com.mcards.sdk.auth.model.auth.User
 import com.mcards.sdk.cards.CardsSdk
 import com.mcards.sdk.cards.CardsSdkProvider
-import com.mcards.sdk.cards.CardsViewModel
 import com.mcards.sdk.cards.demo.databinding.FragmentDemoBinding
 import com.mcards.sdk.cards.model.CardStatus
 import com.mcards.sdk.cards.model.WalletResponse
 import com.mcards.sdk.cards.model.WalletStatus
 import com.mcards.sdk.core.model.AuthTokens
 import com.mcards.sdk.core.model.card.Card
-import com.mcards.sdk.core.util.Views
+import com.mcards.sdk.core.network.SdkResult
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.disposables.Disposable
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -31,7 +33,6 @@ class DemoFragment : Fragment() {
 
     private var _binding: FragmentDemoBinding? = null
     private val binding get() = _binding!!
-    private val cardsVM: CardsViewModel by activityViewModels()
     private val cardsSdk = CardsSdkProvider.getInstance()
 
     private var userPhoneNumber = ""
@@ -87,19 +88,9 @@ class DemoFragment : Fragment() {
                 authSdk.login(requireContext(), userPhoneNumber, loginCallback)
             }
         }
-
-        requireActivity().runOnUiThread {
-            cardsVM.cardsList.observe(viewLifecycleOwner) { list ->
-                list?.let {
-                    //TODO do something with the cards
-                    if (it.isNotEmpty()) {
-                        card = it[0]
-                    }
-                }
-            }
-        }
     }
 
+    @SuppressLint("CheckResult")
     private fun initCardsSdk() {
         CardsSdkProvider.getInstance().init(requireActivity(),
             accessToken,
@@ -119,7 +110,29 @@ class DemoFragment : Fragment() {
 
         observeSync(cardsSdk.syncWallet())
 
-        cardsVM.requestCardsList()
+        cardsSdk.getCardsList()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : SingleObserver<SdkResult<List<Card>>> {
+                override fun onSubscribe(d: Disposable) {
+                    binding.progressbar.visibility = View.VISIBLE
+                }
+
+                override fun onError(e: Throwable) {
+                    binding.progressbar.visibility = View.GONE
+                    Snackbar.make(requireView(), e.localizedMessage!!, BaseTransientBottomBar.LENGTH_LONG).show()
+                }
+
+                override fun onSuccess(t: SdkResult<List<Card>>) {
+                    binding.progressbar.visibility = View.GONE
+                    t.result?.let {
+                        if (it.isNotEmpty()) {
+                            card = it[0]
+                        }
+                    } ?: t.errorMsg?.let {
+                        Snackbar.make(requireView(), it, BaseTransientBottomBar.LENGTH_LONG).show()
+                    }
+                }
+            })
     }
 
     override fun onStart() {
