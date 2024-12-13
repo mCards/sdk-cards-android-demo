@@ -94,8 +94,8 @@ class DemoFragment : Fragment() {
     private fun initCardsSdk() {
         CardsSdkProvider.getInstance().init(requireActivity(),
             accessToken,
-            debug = true,
-            useFirebase =  false,
+            debug = BuildConfig.DEBUG,
+            useFirebase =  false, //TODO if using firebase, set to true
             object : CardsSdk.InvalidTokenCallback {
                 override fun onTokenInvalid(): String {
                     return AuthSdkProvider.getInstance().refreshTokens().accessToken
@@ -114,22 +114,35 @@ class DemoFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : SingleObserver<SdkResult<List<Card>>> {
                 override fun onSubscribe(d: Disposable) {
-                    binding.progressbar.visibility = View.VISIBLE
+                    activity?.runOnUiThread {
+                        binding.progressbar.visibility = View.VISIBLE
+                    }
                 }
 
                 override fun onError(e: Throwable) {
-                    binding.progressbar.visibility = View.GONE
-                    Snackbar.make(requireView(), e.localizedMessage!!, BaseTransientBottomBar.LENGTH_LONG).show()
+                    activity?.runOnUiThread {
+                        binding.progressbar.visibility = View.GONE
+                        Snackbar.make(
+                            requireView(),
+                            e.localizedMessage!!,
+                            BaseTransientBottomBar.LENGTH_LONG
+                        ).show()
+                    }
                 }
 
                 override fun onSuccess(t: SdkResult<List<Card>>) {
-                    binding.progressbar.visibility = View.GONE
+                    activity?.runOnUiThread {
+                        binding.progressbar.visibility = View.GONE
+                    }
                     t.result?.let {
                         if (it.isNotEmpty()) {
                             card = it[0]
                         }
                     } ?: t.errorMsg?.let {
-                        Snackbar.make(requireView(), it, BaseTransientBottomBar.LENGTH_LONG).show()
+                        activity?.runOnUiThread {
+                            Snackbar.make(requireView(), it, BaseTransientBottomBar.LENGTH_LONG)
+                                .show()
+                        }
                     }
                 }
             })
