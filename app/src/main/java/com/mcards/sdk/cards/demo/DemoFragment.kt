@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -73,7 +74,10 @@ class DemoFragment : Fragment() {
                 idToken = tokens.idToken
                 userPhoneNumber = user.userClaim.phoneNumber
                 loggedIn = true
-                initCardsSdk()
+
+                activity?.runOnUiThread {
+                    initCardsSdk()
+                }
             }
 
             override fun onFailure(message: String) {
@@ -91,6 +95,7 @@ class DemoFragment : Fragment() {
     }
 
     @SuppressLint("CheckResult")
+    @MainThread
     private fun initCardsSdk() {
         CardsSdkProvider.getInstance().init(requireActivity(),
             accessToken,
