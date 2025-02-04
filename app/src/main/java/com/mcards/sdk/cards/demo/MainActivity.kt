@@ -17,15 +17,21 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // if login appears to succeed, but the 2step screen spins indefinitely without
-        // redirecting to your app, it means the auth0 scheme is incorrect.
-        AuthSdkProvider.getInstance().init(getString(R.string.auth0_domain),
+        val authSdk = AuthSdkProvider.getInstance()
+
+        // if login appears to succeed, but the verification code screen spins indefinitely without
+        // redirecting to your app, it means the auth0 scheme is incorrect. Also make  sure your
+        // auth0 domain has no trailing '/'
+        authSdk.init(getString(R.string.auth0_domain),
             AUTH0_CLIENT_ID,
             AUTH0_AUD,
             BuildConfig.APPLICATION_ID)
 
         if (BuildConfig.DEBUG) {
-            AuthSdkProvider.getInstance().debug()
+            authSdk.debug()
         }
+
+        //TODO enable firebase logging if your app supports firebase
+        //authSdk.useFirebase()
     }
 }
