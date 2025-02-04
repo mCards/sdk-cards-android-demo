@@ -28,7 +28,7 @@ These values are gotten from the mCards team after setting up the client's auth0
 
 You must then also update the manifest placeholders in the build.gradle file:
 
-e.g. addManifestPlaceholders(mapOf("auth0Domain" to "@string/auth0_domain", "auth0Scheme" to "your app ID"))
+e.g. ```addManifestPlaceholders(mapOf("auth0Domain" to "@string/auth0_domain", "auth0Scheme" to "your app ID"))```
 
 
 # Importing the Cards SDK
