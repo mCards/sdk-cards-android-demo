@@ -12,13 +12,12 @@ Digital Provisioning Operations
 7. Activate a card that was partially added to the digital wallet
 
 mCard Operations
-8. Fetch a user's mCard list
-9. Fetch a single mCard by ID
-10. Fetch the different cash balances for a given mCard
-11. Display mCard payment details (PAN, expiry, etc) via a secure webview
+1. Fetch a user's mCard list
+2. Fetch a single mCard by ID
+3. Fetch the different cash balances for a given mCard
+4. Display mCard payment details (PAN, expiry, etc) via a secure webview
 
-This demo app shows how to use the Auth SDK as a token provider in concert with the Cards SDK.
-It provides example code for a subset of the above SDK features, including digital provisioning.
+This demo app shows how to use the Auth SDK as a token provider in concert with the Cards SDK. It provides example code for a subset of the above SDK features, including digital provisioning.
 
 # Usage
 Implementing apps MUST override this string value for auth0 to work:
