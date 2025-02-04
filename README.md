@@ -22,7 +22,7 @@ This demo app shows how to use the Auth SDK as a token provider in concert with 
 # Usage
 Implementing apps MUST override this string value for auth0 to work:
 
-<string name="auth0_domain">your value here</string>
+"<string name="auth0_domain">your value here</string>"
 
 These values are gotten from the mCards team after setting up the client's auth0 instance.
 
