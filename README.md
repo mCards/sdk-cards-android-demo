@@ -2,18 +2,23 @@
 
 The mCards android Cards SDK encapsulates the following functionality:
 
-1. Digital provisioning via Google Pay
-2. Check whether or not Google Pay is installed
-3. Install Google Pay
-4. Sync the currently installed wallet
-5. Check whether a card is in the digital wallet
-6. Add a card to the digital wallet
-7. Remove a card from the digital wallet
-8. Continue adding a card that was partially added to the digital wallet
-9. Fetch a user's mCard list
-10. Fetch a single mCard by ID
-11. Fetch the balances for a given mCard
-12. Display mCard payment details via a secure webview
+Digital Provisioning Operations
+1. Check whether or not Google Pay is installed
+2. Install Google Pay
+3. Sync the currently installed wallet
+4. Check whether a card is in the digital wallet
+5. Add a card to the digital wallet
+6. Remove a card from the digital wallet
+7. Activate a card that was partially added to the digital wallet
+
+mCard Operations
+8. Fetch a user's mCard list
+9. Fetch a single mCard by ID
+10. Fetch the different cash balances for a given mCard
+11. Display mCard payment details (PAN, expiry, etc) via a secure webview
+
+This demo app shows how to use the Auth SDK as a token provider in concert with the Cards SDK.
+It provides example code for a subset of the above SDK features, including digital provisioning.
 
 # Usage
 Implementing apps MUST override this string value for auth0 to work:
@@ -27,20 +32,24 @@ You must then also update the manifest placeholders in the build.gradle file:
 e.g. addManifestPlaceholders(mapOf("auth0Domain" to "@string/auth0_domain", "auth0Scheme" to "your app ID"))
 
 
-# Importing the Auth SDK
-Add the following to your module-level build.gradle:
+# Importing the Cards SDK
+The mCards android SDKs are provided via a bill of materials. Add the following to your module-level build.gradle:
 
 Groovy:
 ```
-implementation "com.mcards.sdk:cards:$latestVersion"
+implementation(platform("com.mcards.sdk:bom:$latestVersion"))
+implementation "com.mcards.sdk:cards"
+//implementation "com.mcards.sdk:auth" //only if also using the auth sdk as a token provider
 ```
 
 Kotlin:
 ```
-implementation("com.mcards.sdk:cards:$latestVersion")
+implementation(platform("com.mcards.sdk:bom:$latestVersion"))
+implementation("com.mcards.sdk:cards")
+//implementation("com.mcards.sdk:auth") //only if also using the auth sdk as a token provider
 ```
 
-And the following to the project settings.gradle:
+And the following to the project settings.gradle (groovy):
 ```
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -49,7 +58,7 @@ dependencyResolutionManagement {
         mavenCentral()
 
         maven {
-            url = uri("https://maven.pkg.github.com/Wantsa/sdk-cards-android")
+            url = uri("https://maven.pkg.github.com/Wantsa/sdk-bom-android")
             credentials {
                 username = GITHUB_USERNAME
                 password = GITHUB_TOKEN
