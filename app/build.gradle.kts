@@ -51,8 +51,9 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
-    implementation(libs.auth.sdk)
-    implementation(libs.cards.sdk)
+    implementation(platform(libs.sdk.bom))
+    implementation(libs.auth)
+    implementation(libs.cards)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
