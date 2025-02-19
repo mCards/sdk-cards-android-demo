@@ -67,5 +67,18 @@ dependencyResolutionManagement {
 }
 ```
 
+## Google Pay Button
+
+The Cards SDK provides the assets & styling to add correctly branded "Add to Google Pay" buttons to any app. Just add the following to any layout:
+
+        <com.mcards.sdk.cards.view.custom.GooglePayButton
+            style="@style/GooglePayButton"/>
+
+With additional styling and attributes as needed. Add a click listener like so (Java):
+
+```
+binding.[button ID].findViewById(com.mcards.sdk.cards.R.id.google_pay_btn_background).setOnClickListener();
+```
+
 # Documentation
 \\\\\Add documentation links here/////
