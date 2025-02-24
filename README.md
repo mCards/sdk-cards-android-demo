@@ -19,7 +19,7 @@ mCard Operations
 
 This demo app shows how to use the Auth SDK as a token provider in concert with the Cards SDK. It provides example code for a subset of the above SDK features, including digital provisioning.
 
-# Usage
+# Integration
 Implementing apps MUST override this string value for auth0 to work:
 
 ```<string name="auth0_domain">your value here</string>```
@@ -30,6 +30,7 @@ You must then also update the manifest placeholders in the build.gradle file:
 
 e.g. ```addManifestPlaceholders(mapOf("auth0Domain" to "@string/auth0_domain", "auth0Scheme" to "your app ID"))```
 
+No unique steps are required to integrate with the Cards SDK.
 
 # Importing the Cards SDK
 The mCards android SDKs are provided via a bill of materials. Add the following to your module-level build.gradle:
@@ -79,6 +80,15 @@ With additional styling and attributes as needed. Add a click listener like so (
 ```
 binding.[button ID].findViewById(com.mcards.sdk.cards.R.id.google_pay_btn_background).setOnClickListener();
 ```
+
+# Test User
+A basic user has been set up using a free SMS service. This user has the minimum amount of data needed to login and perform most SDK operations.
+
+The user's phone number is:
++1 405-293-8132
+
+and SMS codes are received here:
+https://receive-sms.cc/US-Phone-Number/14052938132
 
 # Documentation
 \\\\\Add documentation links here/////
