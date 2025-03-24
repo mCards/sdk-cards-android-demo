@@ -58,7 +58,7 @@ dependencyResolutionManagement {
         mavenCentral()
 
         maven {
-            url = uri("https://maven.pkg.github.com/mymcard/sdk-bom-android")
+            url = uri("https://maven.pkg.github.com/mcards/sdk-bom-android")
             credentials {
                 username = GITHUB_USERNAME
                 password = GITHUB_TOKEN
@@ -91,4 +91,6 @@ and SMS codes are received here:
 https://receive-sms.cc/US-Phone-Number/14052938132
 
 # Documentation
-\\\\\Add documentation links here/////
+Documentation Site: https://mcards.readme.io/
+
+Site-Wide Password: mCardsDevDocs
