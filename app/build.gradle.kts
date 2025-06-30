@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.mcards.sdk.cards.demo"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
         addManifestPlaceholders(mapOf("auth0Domain" to "@string/auth0_domain",
