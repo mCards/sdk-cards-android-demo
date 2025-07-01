@@ -22,7 +22,7 @@ import com.mcards.sdk.cards.model.WalletResponse
 import com.mcards.sdk.cards.model.WalletStatus
 import com.mcards.sdk.core.model.AuthTokens
 import com.mcards.sdk.core.model.card.Card
-import com.mcards.sdk.core.network.SdkResult
+import com.mcards.sdk.core.network.model.SdkResult
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -63,7 +63,7 @@ class DemoFragment : Fragment() {
             }
         }
 
-        val loginCallback = object : AuthSdk.LoginCallback {
+        val loginCallback = object : AuthSdk.Auth0Callback {
             override fun onSuccess(
                 user: User,
                 tokens: AuthTokens,
@@ -88,9 +88,9 @@ class DemoFragment : Fragment() {
         val authSdk = AuthSdkProvider.getInstance()
         binding.loginBtn.setOnClickListener {
             if (userPhoneNumber.isBlank()) {
-                authSdk.login(requireContext(), TEST_PHONE_NUMBER, loginCallback)
+                authSdk.auth0Authenticate(requireContext(), TEST_PHONE_NUMBER, loginCallback)
             } else {
-                authSdk.login(requireContext(), userPhoneNumber, loginCallback)
+                authSdk.auth0Authenticate(requireContext(), userPhoneNumber, loginCallback)
             }
         }
     }
@@ -104,7 +104,7 @@ class DemoFragment : Fragment() {
             useFirebase =  false, //TODO if using firebase, set to true
             object : CardsSdk.InvalidTokenCallback {
                 override fun onTokenInvalid(): String {
-                    return AuthSdkProvider.getInstance().refreshTokens().accessToken
+                    return AuthSdkProvider.getInstance().refreshAuth0Tokens().accessToken
                 }
             })
 
@@ -141,6 +141,8 @@ class DemoFragment : Fragment() {
                         binding.progressbar.visibility = View.GONE
                     }
                     t.result?.let {
+                        Snackbar.make(requireView(), "Fetched cards successfully, debug to inspect data", BaseTransientBottomBar.LENGTH_LONG)
+                            .show()
                         if (it.isNotEmpty()) {
                             card = it[0]
                         }

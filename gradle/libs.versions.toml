@@ -1,11 +1,15 @@
 [versions]
-agp = "8.9.1"
-kotlin = "2.1.20"
-bom = "0.0.17"
+agp = "8.11.0"
+kotlin = "2.2.0"
+bom = "1.0.3"
 material = "1.12.0"
-navigation = "2.8.9"
+navigation = "2.9.0"
+rxandroid = "3.0.2"
+rxjava = "3.1.10"
 
 [libraries]
+rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
+rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
 sdk-bom = { module = "com.mcards.sdk:bom", version.ref = "bom" }
 auth = { module = "com.mcards.sdk:auth" }
 cards = { module = "com.mcards.sdk:cards" }
