@@ -47,7 +47,7 @@
             style="@style/GooglePayButton"
             android:elevation="8dp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_large"
+            android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_btn"

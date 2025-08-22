@@ -101,7 +101,6 @@ class DemoFragment : Fragment() {
         CardsSdkProvider.getInstance().init(requireActivity(),
             accessToken,
             debug = BuildConfig.DEBUG,
-            useFirebase =  false, //TODO if using firebase, set to true
             object : CardsSdk.InvalidTokenCallback {
                 override fun onTokenInvalid(): String {
                     return AuthSdkProvider.getInstance().refreshAuth0Tokens().accessToken
