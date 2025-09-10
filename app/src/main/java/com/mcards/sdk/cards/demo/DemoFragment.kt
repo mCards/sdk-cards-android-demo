@@ -23,6 +23,7 @@ import com.mcards.sdk.cards.model.WalletStatus
 import com.mcards.sdk.core.model.AuthTokens
 import com.mcards.sdk.core.model.card.Card
 import com.mcards.sdk.core.network.model.SdkResult
+import com.mcards.sdk.core.util.LoggingCallback
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.Disposable
@@ -98,7 +99,7 @@ class DemoFragment : Fragment() {
     @SuppressLint("CheckResult")
     @MainThread
     private fun initCardsSdk() {
-        CardsSdkProvider.getInstance().init(requireActivity(),
+        cardsSdk.init(requireActivity(),
             accessToken,
             debug = BuildConfig.DEBUG,
             object : CardsSdk.InvalidTokenCallback {
@@ -106,6 +107,17 @@ class DemoFragment : Fragment() {
                     return AuthSdkProvider.getInstance().refreshAuth0Tokens().accessToken
                 }
             })
+
+        //optional, to use your standard logging methods. Needs to be set on each sdk individually
+        cardsSdk.setLoggingCallback(object : LoggingCallback {
+            override fun log(t: Throwable) {
+                //TODO log exception
+            }
+
+            override fun log(msg: String) {
+                //TODO log message
+            }
+        })
 
         cardsSdk.setWalletCallback(object : CardsSdk.WalletCallback {
             override fun onDataChanged(liveData: LiveData<WalletResponse<WalletStatus>>) {
