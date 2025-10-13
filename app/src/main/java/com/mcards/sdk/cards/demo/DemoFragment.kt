@@ -20,6 +20,7 @@ import com.mcards.sdk.cards.demo.databinding.FragmentDemoBinding
 import com.mcards.sdk.cards.model.CardStatus
 import com.mcards.sdk.cards.model.WalletResponse
 import com.mcards.sdk.cards.model.WalletStatus
+import com.mcards.sdk.core.InvalidTokenCallback
 import com.mcards.sdk.core.model.AuthTokens
 import com.mcards.sdk.core.model.card.Card
 import com.mcards.sdk.core.network.model.SdkResult
@@ -102,7 +103,7 @@ class DemoFragment : Fragment() {
         cardsSdk.init(requireActivity(),
             accessToken,
             debug = BuildConfig.DEBUG,
-            object : CardsSdk.InvalidTokenCallback {
+            object : InvalidTokenCallback {
                 override fun onTokenInvalid(): String {
                     return AuthSdkProvider.getInstance().refreshAuth0Tokens().accessToken
                 }
