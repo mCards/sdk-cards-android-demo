@@ -42,7 +42,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/failure_explanation" />
 
-        <com.mcards.sdk.cards.view.custom.GooglePayButton
+        <com.mcards.sdk.cards.view.GooglePayButton
             android:id="@+id/add_to_wallet"
             style="@style/GooglePayButton"
             android:elevation="8dp"
