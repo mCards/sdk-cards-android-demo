@@ -1,7 +1,7 @@
 [versions]
 agp = "9.0.0"
 bom = "1.0.14"
-material = "1.13.0"
+material = "1.14.0"
 navigation = "2.9.7"
 rxandroid = "3.0.2"
 rxjava = "3.1.12"
