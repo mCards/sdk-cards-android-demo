@@ -89,7 +89,7 @@ The dependency versions and full release procedure are in the
 **Merge this demo update only after that release has been published.**
 
 Build requirements: JDK 17+, Android compile SDK 37, minimum Android 11/API 30,
-AGP 9.2.0, Gradle 9.5.0 and Kotlin 2.4.10. The Kotlin plugin is declared at the root
+AGP 9.2.1, Gradle 9.5.1 and Kotlin 2.4.10. The Kotlin plugin is declared at the root
 (without applying it to the app) to select the compiler used by AGP's built-in Kotlin.
 AuthSDK 1.2.8.6 carries Kotlin 2.4 metadata, so the older default compiler cannot consume it.
 
