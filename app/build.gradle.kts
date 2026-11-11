@@ -8,11 +8,11 @@ val javaVersion = JavaVersion.VERSION_17
 
 android {
     namespace = "com.mcards.sdk.cards.demo"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.mcards.sdk.cards.demo"
-        minSdk = 28
+        minSdk = 30
         targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"

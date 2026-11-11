@@ -1,6 +1,7 @@
 [versions]
-agp = "9.0.0"
-bom = "1.0.14"
+agp = "9.2.0"
+kotlin = "2.4.10"
+bom = "1.0.19"
 material = "1.13.0"
 navigation = "2.9.7"
 rxandroid = "3.0.2"
@@ -18,4 +19,4 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
