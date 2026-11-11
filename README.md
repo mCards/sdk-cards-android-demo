@@ -30,21 +30,21 @@ You must then also update the manifest placeholders in the build.gradle file:
 
 e.g. ```addManifestPlaceholders(mapOf("auth0Domain" to "@string/auth0_domain", "auth0Scheme" to "your app ID"))```
 
-No unique steps are required to integrate with the Cards SDK.
+Use the customer package versions and build requirements listed below.
 
 # Importing the Cards SDK
 The mCards android SDKs are provided via a [bill of materials](https://github.com/mCards/sdk-bom-android). Add the following to your module-level build.gradle:
 
 Groovy:
 ```
-implementation(platform("com.mcards.sdk:bom:$latestVersion"))
+implementation(platform("com.mcards.sdk:bom:1.0.19"))
 implementation "com.mcards.sdk:cards"
 //implementation "com.mcards.sdk:auth" //only if also using the auth sdk as a token provider
 ```
 
 Kotlin:
 ```
-implementation(platform("com.mcards.sdk:bom:$latestVersion"))
+implementation(platform("com.mcards.sdk:bom:1.0.19"))
 implementation("com.mcards.sdk:cards")
 //implementation("com.mcards.sdk:auth") //only if also using the auth sdk as a token provider
 ```
@@ -72,7 +72,7 @@ dependencyResolutionManagement {
 
 The Cards SDK provides the assets & styling to add correctly branded "Add to Google Pay" buttons to any app. Just add the following to any layout:
 
-        <com.mcards.sdk.cards.view.custom.GooglePayButton
+        <com.mcards.sdk.cards.view.GooglePayButton
             style="@style/GooglePayButton"/>
 
 With additional styling and attributes as needed. Add a click listener like so (Java):
@@ -81,14 +81,38 @@ With additional styling and attributes as needed. Add a click listener like so (
 binding.[button ID].findViewById(com.mcards.sdk.cards.R.id.google_pay_btn_background).setOnClickListener();
 ```
 
-# Test User
-A basic user has been set up using a free SMS service. This user has the minimum amount of data needed to login and perform most SDK operations.
+# PIN management demo
 
-The user's phone number is:
-+1 405-293-8132
+Use customer BoM **1.0.19** (Cards **1.2.0**, Core **1.3.9.8**, Auth **1.2.8.6**).
+The dependency versions and full release procedure are in the
+[customer BoM repository](https://github.com/mCards/sdk-bom-android).
+**Merge this demo update only after that release has been published.**
 
-and SMS codes are received here:
-https://receive-sms.cc/US-Phone-Number/14052938132
+Build requirements: JDK 17+, Android compile SDK 37, minimum Android 11/API 30,
+AGP 9.2.0, Gradle 9.5.0 and Kotlin 2.4.10. The Kotlin plugin is declared at the root
+(without applying it to the app) to select the compiler used by AGP's built-in Kotlin.
+AuthSDK 1.2.8.6 carries Kotlin 2.4 metadata, so the older default compiler cannot consume it.
+
+Configure your assigned Auth0 domain/client/audience in the string resources and
+`MainActivity`; the sample values are not a ready-to-use Tasted UAT configuration.
+Log in with an assigned fictional UAT identity and an active Marqeta card. No shared
+SMS inbox or test identity is provided in this repository.
+
+Choose **Set / change PIN**, select a card, and complete the hosted flow. The demo refreshes
+tokens before loading, enables JavaScript/cookies/DOM storage, and calls
+`showSetPin(webView, card, idToken, listener)`. The SDK installs the bridge. Only
+`PinAction.SET_PIN` success closes the dialog; activation/reveal events are not treated
+as PIN completion. The SDK re-fetches the card and the demo retains that result, but
+issuer confirmation may still be pending. Component errors allow retry, page load errors
+are handled separately, and **Close** remains available. The WebView is destroyed on close.
+
+The same flow sets or changes a PIN. Neither the app nor the listener handles the PIN
+value. There are no theme or `success_url` arguments; component styling belongs to the
+hosted page.
+
+```sh
+./gradlew :app:assembleDebug :app:lintDebug
+```
 
 # Documentation
 [Documentation site](https://mcards.readme.io/)

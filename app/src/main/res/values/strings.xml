@@ -5,4 +5,5 @@
 
     <!-- TODO add your auth0 values gotten from the mCards team -->
     <string name="auth0_domain">mcards-test.au.auth0.com</string>
+    <string name="set_change_pin">Set / change PIN</string>
 </resources>
