@@ -1,9 +1,9 @@
 [versions]
-agp = "9.2.0"
+agp = "9.2.1"
 kotlin = "2.4.10"
 bom = "1.0.19"
-material = "1.13.0"
-navigation = "2.9.7"
+material = "1.14.0"
+navigation = "2.9.8"
 rxandroid = "3.0.2"
 rxjava = "3.1.12"
 
